@@ -55,7 +55,7 @@ public class BattleManager : MonoBehaviour {
                 break;
             case BattleState.RoundOver:
                 EstablishTurnOrder();
-                TransitionStates(turnOrderBattlers[0].controlledByPlayer ? BattleState.PlayerTurn | BattleState.EnemyTurn);
+                //TransitionStates(turnOrderBattlers[0].controlledByPlayer ? BattleState.PlayerTurn | BattleState.EnemyTurn);
                 break;
             case BattleState.BattleOver:
                 break;
