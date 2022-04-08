@@ -21,6 +21,7 @@ public class BattleManager : MonoBehaviour {
         RoundOver,
         BattleOver
     }
+    [SerializeField]
     private BattleState currentState;
 
     #region Singleton
@@ -44,10 +45,12 @@ public class BattleManager : MonoBehaviour {
         }
 
         currentState = BattleState.BattleStart;
+        StartCoroutine(RunCurrentState());
         
     }
     void TransitionStates(BattleState targetState) {
         currentState = targetState;
+        Debug.Log("Event Triggered");
 
         StartCoroutine(RunCurrentState()); 
     }
@@ -57,15 +60,15 @@ public class BattleManager : MonoBehaviour {
         switch(currentState)
         {
             case BattleState.BattleStart:
-                EstablishTurnOrder();
-                TransitionStates(BattleState.PlayerTurn);
+            Debug.Log("Current Event");
+                //EstablishTurnOrder();
+                //TransitionStates(BattleState.PlayerTurn);
 
                 BattleStartCallback?.Invoke();
+                Debug.Log((BattleStartCallback != null));
                 break;
             case BattleState.PlayerTurn:
                 playerController.takingTurn = true;
-
-
                 break;
             case BattleState.EnemyTurn:
                 break;

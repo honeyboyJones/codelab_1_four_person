@@ -11,6 +11,7 @@ public class GridManager : MonoBehaviour {
     [SerializeField]
     Vector2[] spawnPositions;
 
+    [SerializeField]
     BattleManager battleManager;
 
 
@@ -26,7 +27,7 @@ public class GridManager : MonoBehaviour {
     }
     #endregion
 
-    private void Start() {
+    public void Start() {
 
         for( int x = 0; x<gridDimensions.x; x++)
         {
@@ -47,8 +48,9 @@ public class GridManager : MonoBehaviour {
         battleManager.BattleStartCallback += SpawnBattler;
     }
 
-    public void SpawnBattler()
+    private void SpawnBattler()
     {
+        Debug.Log("I spawned");
         int index = 0;
 
         foreach (Battler battler in battlers)

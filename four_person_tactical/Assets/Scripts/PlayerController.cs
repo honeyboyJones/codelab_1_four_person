@@ -19,6 +19,14 @@ public class PlayerController : MonoBehaviour {
     }
     #endregion
 
+    IEnumerator Start()
+    {
+        yield return new WaitForSeconds(1);
+
+        takingTurn = false;
+        StartCoroutine(TakeTurn());
+    }
+
     public bool takingTurn;
 
     List<Battler> playerBattlers = new List<Battler>();
@@ -32,6 +40,7 @@ public class PlayerController : MonoBehaviour {
 
         }
 
+        Debug.Log("Sending Event");
         PlayerTurnOverCallback?.Invoke(BattleManager.BattleState.EnemyTurn);
     }
 }
