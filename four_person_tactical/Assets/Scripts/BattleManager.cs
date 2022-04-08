@@ -10,7 +10,7 @@ public class BattleManager : MonoBehaviour {
     List<Battler> enemyBattlers = new List<Battler>();
     List<Battler> turnOrderBattlers = new List<Battler>();
 
-    public delegate void OnBattleState();
+    public delegate void OnBattleState(float dummy);
     public event OnBattleState BattleStartCallback;
 
     public enum BattleState
@@ -64,7 +64,7 @@ public class BattleManager : MonoBehaviour {
                 //EstablishTurnOrder();
                 //TransitionStates(BattleState.PlayerTurn);
 
-                BattleStartCallback?.Invoke();
+                BattleStartCallback?.Invoke(0);
                 Debug.Log((BattleStartCallback != null));
                 break;
             case BattleState.PlayerTurn:

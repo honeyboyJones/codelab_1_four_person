@@ -5,6 +5,7 @@ using UnityEngine;
 public class GridManager : MonoBehaviour {
 
     [SerializeField] Vector2 gridDimensions;
+    [SerializeField] float tileSize;
     public List<Coordinate> coords = new List<Coordinate>();
     public List<Battler> battlers = new List<Battler>();
 
@@ -29,39 +30,45 @@ public class GridManager : MonoBehaviour {
 
     public void Start() {
 
+        //Declare list of Coordinates
         for( int x = 0; x<gridDimensions.x; x++)
         {
             for (int y = 0; y < gridDimensions.y; y++)
             {
                 Coordinate newCoordinate = new Coordinate();
                 newCoordinate.coord = new Vector2(x, y);
+                float tileSizeOffset = tileSize / 2;
+                
+                newCoordinate.worldPos = new Vector3(x - gridDimensions.x / 2 + tileSizeOffset, 0, y - gridDimensions.y / 2);
                 coords.Add(newCoordinate);
             }
         }
-        coords[3] = UpdateCoordinate(coords[3], battlers[0].GetComponent<GridActor>());
+
+        
+        
 
         if(BattleManager.instance != null)
         {
             battleManager = BattleManager.instance;
+            battleManager.BattleStartCallback += SpawnBattler;
         }
-
-        battleManager.BattleStartCallback += SpawnBattler;
     }
 
-    private void SpawnBattler()
+    private void SpawnBattler(float dummy)
     {
-        Debug.Log("I spawned");
         int index = 0;
 
         foreach (Battler battler in battlers)
         {
-            Instantiate(battler.stats.prefab, new Vector3 (spawnPositions[index].x, 0, spawnPositions[index].y), Quaternion.identity);
+            Coordinate targetCoord = new Coordinate();
+            targetCoord.coord = spawnPositions[index];
+            Coordinate targetWorldPos = coords.Find(x => x.coord == targetCoord.coord);
+            Instantiate(battler.stats.prefab, new Vector3 (targetWorldPos.worldPos.x, 0, targetWorldPos.worldPos.z), Quaternion.identity);
             index ++;
         }
     }
 
-    Coordinate UpdateCoordinate(Coordinate targetCoord, GridActor actor = null)
-    {
+    Coordinate UpdateCoordinate(Coordinate targetCoord, GridActor actor = null) {
         Coordinate newCoordinate = new Coordinate();
         newCoordinate.coord = targetCoord.coord;
 
@@ -71,7 +78,6 @@ public class GridManager : MonoBehaviour {
         }
         else
         {
-            Debug.Log("updating coord");
             newCoordinate.occupiedBy = actor;
         }
 
@@ -80,9 +86,10 @@ public class GridManager : MonoBehaviour {
 
 }
 [System.Serializable]
-public struct Coordinate{
+public class Coordinate {
 
     public Vector2 coord;
+    public Vector3 worldPos;
     public GridActor occupiedBy;
 
 
