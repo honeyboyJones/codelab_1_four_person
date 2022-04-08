@@ -7,5 +7,10 @@ public class BattlerStats {
 
     public int maxHP;
     public int currentHP;
-
+    public int currentShield;
+    public int strength;
+    public int defence;
+    public Sprite portrait;
+    public string name;
 }
+
