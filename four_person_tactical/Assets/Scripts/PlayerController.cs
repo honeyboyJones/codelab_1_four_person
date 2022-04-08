@@ -32,8 +32,6 @@ public class PlayerController : MonoBehaviour {
 
         }
 
-
-
         PlayerTurnOverCallback?.Invoke(BattleManager.BattleState.EnemyTurn);
     }
 }

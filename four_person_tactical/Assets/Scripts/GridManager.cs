@@ -8,6 +8,11 @@ public class GridManager : MonoBehaviour {
     public List<Coordinate> coords = new List<Coordinate>();
     public List<Battler> battlers = new List<Battler>();
 
+    [SerializeField]
+    Vector2[] spawnPositions;
+
+    BattleManager battleManager;
+
 
     #region Singleton
 
@@ -32,21 +37,43 @@ public class GridManager : MonoBehaviour {
                 coords.Add(newCoordinate);
             }
         }
+        coords[3] = UpdateCoordinate(coords[3], battlers[0].GetComponent<GridActor>());
 
-        UpdateCoordinate(coords[3], battlers[0].GetComponent<GridActor>());
+        if(BattleManager.instance != null)
+        {
+            battleManager = BattleManager.instance;
+        }
+
+        battleManager.BattleStartCallback += SpawnBattler;
     }
 
-    void UpdateCoordinate(Coordinate targetCoord, GridActor actor = null)
+    public void SpawnBattler()
     {
+        int index = 0;
+
+        foreach (Battler battler in battlers)
+        {
+            Instantiate(battler.stats.prefab, new Vector3 (spawnPositions[index].x, 0, spawnPositions[index].y), Quaternion.identity);
+            index ++;
+        }
+    }
+
+    Coordinate UpdateCoordinate(Coordinate targetCoord, GridActor actor = null)
+    {
+        Coordinate newCoordinate = new Coordinate();
+        newCoordinate.coord = targetCoord.coord;
+
         if (actor == null)
         {
-            targetCoord.occupiedBy = null;
+            newCoordinate.occupiedBy = null;
         }
         else
         {
             Debug.Log("updating coord");
-            targetCoord.occupiedBy = actor;
+            newCoordinate.occupiedBy = actor;
         }
+
+        return newCoordinate;
     }
 
 }

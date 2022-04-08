@@ -10,6 +10,9 @@ public class BattleManager : MonoBehaviour {
     List<Battler> enemyBattlers = new List<Battler>();
     List<Battler> turnOrderBattlers = new List<Battler>();
 
+    public delegate void OnBattleState();
+    public event OnBattleState BattleStartCallback;
+
     public enum BattleState
     {
         BattleStart,
@@ -18,8 +21,19 @@ public class BattleManager : MonoBehaviour {
         RoundOver,
         BattleOver
     }
-
     private BattleState currentState;
+
+    #region Singleton
+
+    public static BattleManager instance;
+    private void Awake() {
+        if (instance != null) {
+            Debug.LogWarning("Warning! More than one instance of BattleManager found!");
+            return;
+        }
+        instance = this;
+    }
+    #endregion
 
     private void Start() {
         if(PlayerController.instance != null)
@@ -45,6 +59,8 @@ public class BattleManager : MonoBehaviour {
             case BattleState.BattleStart:
                 EstablishTurnOrder();
                 TransitionStates(BattleState.PlayerTurn);
+
+                BattleStartCallback?.Invoke();
                 break;
             case BattleState.PlayerTurn:
                 playerController.takingTurn = true;

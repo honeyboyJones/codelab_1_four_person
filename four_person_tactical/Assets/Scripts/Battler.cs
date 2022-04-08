@@ -41,7 +41,7 @@ public class Battler : MonoBehaviour {
     {
         stats.currentShield += stats.defence;
 
-       
+
     }
 
     void Attack()

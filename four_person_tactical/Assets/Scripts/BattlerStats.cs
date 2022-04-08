@@ -8,6 +8,7 @@ public class BattlerStats {
     [Header("Cosmetics")]
     public Sprite portrait;
     public string name;
+    public GameObject prefab;
 
     [Header("Core Stats")]
     public int maxHP;
