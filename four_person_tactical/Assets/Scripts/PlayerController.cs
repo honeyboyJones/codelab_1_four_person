@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public delegate void OnPlayerAction();
+    public delegate void OnPlayerAction(BattleManager.BattleState targetState);
     public event OnPlayerAction PlayerTurnOverCallback; //anything can subscribe to this event as long as it has a reference to this instance
 
     #region Singleton

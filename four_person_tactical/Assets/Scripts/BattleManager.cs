@@ -17,11 +17,17 @@ public class BattleManager : MonoBehaviour {
         BattleOver
     }
 
+    private BattleState currentState;
+
     private void Start() {
         if(PlayerController.instance != null)
         {
             playerController = PlayerController.instance;
+
+            playerController.PlayerTurnOverCallback += TransitionStates;
         }
+
+        currentState = BattleState.BattleStart;
         
     }
 
@@ -39,5 +45,27 @@ public class BattleManager : MonoBehaviour {
     
     }
 
+    void TransitionStates(BattleState targetState)
+    {
+        currentState = targetState;
+
+        StartCoroutine(RunCurrentState()); 
+    }
+
+    IEnumerator RunCurrentState()
+    {
+        switch(currentState)
+        {
+            case BattleState.BattleStart:
+                break;
+            case BattleState.PlayerTurn:
+                break;
+            case BattleState.EnemyTurn:
+                break;
+            case BattleState.BattleOver:
+                break;
+        }
+        yield return null;
+    }
 
 }
