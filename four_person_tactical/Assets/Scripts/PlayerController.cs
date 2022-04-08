@@ -22,7 +22,18 @@ public class PlayerController : MonoBehaviour {
     public bool takingTurn;
 
     List<Battler> playerBattlers = new List<Battler>();
+    public Battler currentBattler;
+
+
+    IEnumerator TakeTurn() {
+        while(takingTurn) {
+
+            yield return null;
+
+        }
 
 
 
+        PlayerTurnOverCallback?.Invoke(BattleManager.BattleState.EnemyTurn);
+    }
 }

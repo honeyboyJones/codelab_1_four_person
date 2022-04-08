@@ -5,12 +5,19 @@ using UnityEngine;
 [System.Serializable]
 public class BattlerStats {
 
+    [Header("Cosmetics")]
+    public Sprite portrait;
+    public string name;
+
+    [Header("Core Stats")]
     public int maxHP;
     public int currentHP;
     public int currentShield;
+    public int speed;
+    public int inititive;
     public int strength;
     public int defence;
-    public Sprite portrait;
-    public string name;
+
+    public int turnIndex;
 }
 

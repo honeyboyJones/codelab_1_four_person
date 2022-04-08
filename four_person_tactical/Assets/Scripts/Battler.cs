@@ -5,8 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(GridActor))]
 public class Battler : MonoBehaviour {
 
-    [SerializeField] BattlerStats stats;
+    public BattlerStats stats;
     //GridActor thisActor;
+
+    public bool controlledByPlayer;
 
 
     private void Start() {
@@ -21,25 +23,18 @@ public class Battler : MonoBehaviour {
 
         if(stats.currentShield > 0)
         {
-            if(damageTaken > stats.currentShield)
+            if (damageTaken > stats.currentShield)
             {
                 excessDamage = damageTaken - stats.currentShield;
                 stats.currentShield = 0;
                 stats.currentHP -= excessDamage;
             }
+            else
+                stats.currentShield -= damageTaken;
 
         }
-        else
-        {
-            stats.currentHP -= damageTaken;
-        }
-
-       
-
-
-
-
-
+        else 
+            stats.currentHP -= damageTaken;       
     }
 
     void AddDefence()
