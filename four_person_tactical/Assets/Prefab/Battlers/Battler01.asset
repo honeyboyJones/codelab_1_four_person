@@ -21,5 +21,6 @@ MonoBehaviour:
   speed: 3
   initiative: 2
   strength: 3
+  attackRange: 2
   defence: 2
   turnIndex: 0

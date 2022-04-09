@@ -2548,9 +2548,9 @@ MonoBehaviour:
   playerBattlers:
   - {fileID: 5481270706685275011, guid: 54731af19bd2f4e32afa85f062670e36, type: 3}
   enemyBattlers:
-  - {fileID: 5481270706685275011, guid: 1e32c45aff829ae4998ce3a4c9542ce9, type: 3}
+  - {fileID: 5481270706685275011, guid: 06c5834b3427f2a4688b55a6172328cc, type: 3}
   spawnPositions:
-  - {x: 1, y: 1}
+  - {x: 10, y: 6}
   - {x: 12, y: 6}
 --- !u!1 &1183680864
 GameObject:

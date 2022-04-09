@@ -22,16 +22,25 @@ public class Battler : MonoBehaviour {
 
     public void VisualizeAction(int actionIndex) {
         EndVisualization();
+        List<Coordinate> targetCoords = new List<Coordinate>();
         switch (actionIndex) {
             case 0:
-                List<Vector3[]> targetPos = thisActor.CalculateAdjacentCoords(stats.speed);
-                foreach(Vector3[] pos in targetPos) {
-                    GameObject newTarget = Instantiate(targets[0], pos[0], Quaternion.identity);
-                    newTarget.GetComponent<TargetHover>().coord = new Vector2(pos[1].x, pos[1].y);
+                targetCoords = thisActor.CalculateAdjacentCoords(stats.speed);
+                foreach(Coordinate coord in targetCoords) {
+                    GameObject newTarget = Instantiate(targets[0], coord.worldPosition, Quaternion.identity);
+                    newTarget.GetComponent<TargetHover>().coord = new Vector2(coord.coordinate.x, coord.coordinate.y);
                     instancedTargets.Add(newTarget);
                 }            
                 break;
             case 1:
+                targetCoords = thisActor.CalculateAdjacentCoords(stats.attackRange);
+                foreach(Coordinate coord in targetCoords) { 
+                    if (coord.occupiedBy != null) {
+                        GameObject newTarget = Instantiate(targets[1], coord.worldPosition, Quaternion.identity);
+                        newTarget.GetComponent<TargetHover>().coord = new Vector2(coord.coordinate.x, coord.coordinate.y);
+                        instancedTargets.Add(newTarget);
+                    }
+                }
                 break;
             case 2:
                 break;
@@ -46,9 +55,9 @@ public class Battler : MonoBehaviour {
 
     public IEnumerator Move(Vector2 coord) {
 
-
         yield return StartCoroutine(thisActor.MoveToCoord(coord));
-        //Tell the battle manager it's done
+
+        EndVisualization();
     }
 
     public void AddDefence() {

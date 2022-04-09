@@ -35,7 +35,6 @@ public class TargetHover : MonoBehaviour {
 
     public void OnClicked() {
         playerConrtoller.TargetSelected(coord);
-        Debug.Log("Clicked " + this.name);
 
     }
 

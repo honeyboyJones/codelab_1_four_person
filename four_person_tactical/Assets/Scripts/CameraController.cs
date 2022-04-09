@@ -25,7 +25,6 @@ public class CameraController : MonoBehaviour {
 
 			if (hit.collider != null) {
 				hit.collider.GetComponent<TargetHover>().OnClicked();
-				Debug.Log("Click");
 			}
 		}
 	}

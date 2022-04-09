@@ -107,6 +107,8 @@ public class BattleManager : MonoBehaviour {
             newBattler.thisActor.coord = targetCoord;
             battlers[i] = newBattler;
 
+            targetCoord.occupiedBy = newBattler.thisActor;
+
 
             index ++;
         }

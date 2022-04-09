@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour {
 
     public IEnumerator TakeTurn() {
         while(takingTurn) { //execute this loop while player is taking their turn
-
             yield return null;
         }
         Debug.Log("Sending Event"); 
@@ -39,15 +38,15 @@ public class PlayerController : MonoBehaviour {
     public void VisualizeTarget(int actionIndex) {
         currentBattler.VisualizeAction(actionIndex);
         currentAction = (Actions)actionIndex;
-
     }
-
+    
+    //Hooked up to a button
     public void TargetSelected(Vector2 coord) { 
 
 
         switch (currentAction) {
             case Actions.Move:
-                StartCoroutine(currentBattler.Move(coord));
+                StartCoroutine(MoveBattler(coord));
                 break;
             case Actions.Attack:
                 break;
@@ -60,6 +59,7 @@ public class PlayerController : MonoBehaviour {
     public IEnumerator MoveBattler(Vector2 coord) {
         yield return StartCoroutine(currentBattler.Move(coord));
         takingTurn = false;
+        Debug.Log("Taking Turn false");
     }
 
     public void AddDefense() {

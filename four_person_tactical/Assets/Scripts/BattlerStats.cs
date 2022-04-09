@@ -18,6 +18,7 @@ public class BattlerStats : ScriptableObject {
     public int speed;
     public int initiative;
     public int strength;
+    public int attackRange;
     public int defence;
 
     public int turnIndex;
