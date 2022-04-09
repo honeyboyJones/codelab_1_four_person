@@ -8,10 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5481270706685275021}
+  - component: {fileID: 6607212515398445588}
   - component: {fileID: 5481270706685275010}
   - component: {fileID: 5481270706685275011}
   - component: {fileID: 5481270706685275020}
+  - component: {fileID: 3579678780289203463}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -19,20 +20,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5481270706685275021
-Transform:
+--- !u!224 &6607212515398445588
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5481270706685275008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4220283, y: 1.522597, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.1859839, y: -2.5067387}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &5481270706685275010
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -119,3 +125,11 @@ MonoBehaviour:
     occupiedBy: {fileID: 0}
   moveSpeed: 3
   actionDelay: 0.25
+--- !u!222 &3579678780289203463
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5481270706685275008}
+  m_CullTransparentMesh: 1

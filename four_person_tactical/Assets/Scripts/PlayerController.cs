@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour {
                 StartCoroutine(MoveBattler(coord));
                 break;
             case Actions.Attack:
+                StartCoroutine(BattlerAttack(coord));
                 break;
             case Actions.Defend:
                 break;
@@ -58,6 +59,12 @@ public class PlayerController : MonoBehaviour {
 
     public IEnumerator MoveBattler(Vector2 coord) {
         yield return StartCoroutine(currentBattler.Move(coord));
+        takingTurn = false;
+        Debug.Log("Taking Turn false");
+    }
+
+    public IEnumerator BattlerAttack(Vector2 coord) {
+        yield return StartCoroutine(currentBattler.Attack(coord));
         takingTurn = false;
         Debug.Log("Taking Turn false");
     }

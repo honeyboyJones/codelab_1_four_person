@@ -105,13 +105,21 @@ public class BattleManager : MonoBehaviour {
 
             newBattler.thisActor = newBattler.GetComponent<GridActor>();
             newBattler.thisActor.coord = targetCoord;
+            newBattler.BattlerAttackCallback +=  BattlerCombat;
             battlers[i] = newBattler;
+            
 
             targetCoord.occupiedBy = newBattler.thisActor;
 
 
             index ++;
         }
+    }
+
+    void BattlerCombat(Vector2 coord, int amount){
+        Battler defendingBattler = gridManager.coords.Find(x => x.coordinate == coord).occupiedBy.GetComponent<Battler>();
+
+        defendingBattler.TakeDamage(amount);
     }
 
     List<Battler> GetAllBattlers() { 
