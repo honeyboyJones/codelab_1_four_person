@@ -87,6 +87,7 @@ public class Battler : MonoBehaviour {
         EndVisualization();
     }
 
+    // not used yet
     public void AddDefence() {
         stats.currentShield += stats.defence;
 
@@ -124,7 +125,7 @@ public class Battler : MonoBehaviour {
         }
     }
 
-    // placeholder enemy HP UI
+    // placeholder enemy HP UI text at the top of the scene
     IEnumerator DebugStaticText(){
         hpText = GameObject.FindGameObjectWithTag("Static UI").GetComponent<Text>();
         while(true){
@@ -136,6 +137,7 @@ public class Battler : MonoBehaviour {
     // destroy battler on death
     IEnumerator BattlerDeath()
     {
+        // inset death rattle here
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }

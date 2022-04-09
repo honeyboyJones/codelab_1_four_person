@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Simple class for raycasting clicks onto the hex grid's colliders
+//Simple class for raycasting clicks onto the interactable colliders
 public class CameraController : MonoBehaviour {
 
 	Camera cam;
 	public LayerMask interactionMask;
 
 	void Start() {
-		//idk why I didn't define it in the inspector, when should one use this kind of fail safe? I define a lot of things in the inspector...
 		if(cam == null) {
 			if (GetComponent<Camera>() != null) {
 				cam = GetComponent<Camera>();

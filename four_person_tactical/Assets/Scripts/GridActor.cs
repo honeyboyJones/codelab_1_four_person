@@ -2,52 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// GridActor is stored in the GridManager and stores its local coordinate
+/// All battlers require a GridActor componant
+/// 
+/// </summary>
+
 public class GridActor : MonoBehaviour {
 
+    // reference to GridManager
     GridManager gridManager;
+
+    // local coordinate
     public Coordinate coord = new Coordinate();
 
+    // coroutine animation variables
     [SerializeField] float moveSpeed = 3;
     [SerializeField] float actionDelay = 0.25f;
 
+    // set the references
     void Start() { 
         if (GridManager.instance != null) {
             gridManager = GridManager.instance;
         }
     }
 
+    // not used yet
     public void UpdateGridActorCoord() { 
         
     }
 
+    // returns list of coordinates adjacent to local coordinate by a factor of range
+    // used by the battler class
     public List<Coordinate> CalculateAdjacentCoords(int range) {
         List<Coordinate> adjacentCoords = new List<Coordinate>();
 
         Vector2 coordOffset = coord.coordinate - new Vector2(range, range);
        
+       // four-directional grid targeting for visualization and movement
         for (int r = 1; r <= range; r++) {
-            Vector2 offset = new Vector2(coord.coordinate.x - r, coord.coordinate.y);
-            Coordinate findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
+            // for left
+            Vector2 offset = new Vector2(coord.coordinate.x - r, coord.coordinate.y); 
+            Coordinate findAdjacent = gridManager.coords.Find(x => x.coordinate == offset); // the find constructor looks through a list and compares its contents to a control variable
             if (findAdjacent != null) adjacentCoords.Add(findAdjacent);
             
+            // for right
             offset = new Vector2(coord.coordinate.x + r, coord.coordinate.y);
             findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
             if (findAdjacent != null) adjacentCoords.Add(findAdjacent);
             
+            // for down
             offset = new Vector2(coord.coordinate.x, coord.coordinate.y - r);
             findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
             if (findAdjacent != null) adjacentCoords.Add(findAdjacent);
             
+            // for up
             offset = new Vector2(coord.coordinate.x, coord.coordinate.y + r);
             findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
             if (findAdjacent != null)  adjacentCoords.Add(findAdjacent);
             
         }
 
-        return adjacentCoords;
+        return adjacentCoords; // returns the full list after all the coordinates have been added
     }
 
+    // coroutine controlling the movement
     public IEnumerator MoveToCoord(Vector2 targetCoord) {
+        //coroutine animaition needing debugging later
+
          //bool isMoving = true;
          //while (isMoving) {
 
@@ -82,11 +104,12 @@ public class GridActor : MonoBehaviour {
          //    yield return new WaitForFixedUpdate();
          //}
 
+        // finds target coordinate and changes the transform of the battler
         Coordinate nextCoordinate = gridManager.coords.Find(x => x.coordinate == targetCoord);
         transform.position = nextCoordinate.worldPosition;
         coord = nextCoordinate;
 
-        yield return null;
+        yield return null; // every coroutine needs this to function
     }
 
 }
