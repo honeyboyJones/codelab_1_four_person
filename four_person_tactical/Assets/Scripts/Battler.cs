@@ -103,6 +103,7 @@ public class Battler : MonoBehaviour {
         hpText = GameObject.FindGameObjectWithTag("Static UI").GetComponent<Text>();
         while(true){
             hpText.text = stats.currentHP.ToString();
+            yield return new WaitForFixedUpdate();
         }
     }
 
