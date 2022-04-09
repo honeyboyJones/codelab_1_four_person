@@ -2,15 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class interfaces with the camera controller and triggers the player controller
+/// This component is on all target tile objects
+/// </summary>
+
 public class TargetHover : MonoBehaviour {
 
-    PlayerController playerConrtoller;
+    //refrences
+    PlayerController playerConrtoller;  
+    SpriteRenderer renderer;                
+    //local cooridnate
     public Vector2 coord;
 
-    SpriteRenderer renderer;
-    [SerializeField] Sprite[] sprites;
+    [SerializeField] Sprite[] sprites;                                  //array of sprites to toggle between
     int index;
 
+    //get reference and set default state
     private void Start() {
         if (PlayerController.instance != null) {
             playerConrtoller = PlayerController.instance;
@@ -21,6 +29,7 @@ public class TargetHover : MonoBehaviour {
         
     }
 
+    //functions to toggle sprite states
     private void Update() {
         renderer.sprite = sprites[index];
     }
@@ -33,6 +42,7 @@ public class TargetHover : MonoBehaviour {
         index = 1;
     }
 
+    // trigger player controller from camera controller
     public void OnClicked() {
         playerConrtoller.TargetSelected(coord);
 
