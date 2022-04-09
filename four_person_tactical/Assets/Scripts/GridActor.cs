@@ -43,8 +43,6 @@ public class GridActor : MonoBehaviour {
         return adjacentCoords;
     }
 
-    
-
     public IEnumerator MoveToCoord(Vector2 targetCoord) {
         bool isMoving = true;
         while (isMoving) {
@@ -78,7 +76,6 @@ public class GridActor : MonoBehaviour {
 
             yield return new WaitForFixedUpdate();
         }
-        
     }
 
 }

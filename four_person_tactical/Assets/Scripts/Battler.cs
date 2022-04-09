@@ -26,7 +26,9 @@ public class Battler : MonoBehaviour {
             case 0:
                 List<Vector3> targetPos = thisActor.CalculateAdjacentCoords(stats.speed);
                 foreach(Vector3 pos in targetPos) {
-                    instancedTargets.Add(Instantiate(targets[0], pos, Quaternion.identity));
+                    GameObject newTarget = Instantiate(targets[0], pos, Quaternion.identity);
+                    newTarget.GetComponent<TargetHover>().coord = new Vector2(pos.x, pos.y);
+                    instancedTargets.Add(newTarget);
                 }            
                 break;
             case 1:
@@ -46,7 +48,7 @@ public class Battler : MonoBehaviour {
 
 
         yield return StartCoroutine(thisActor.MoveToCoord(coord));
-
+        //Tell the battle manager it's done
     }
 
     public void AddDefence() {

@@ -18,12 +18,12 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void Update() {
-	//Check for clicks, raycast, execute Interacable class function
+	//Check for clicks, raycast, execute TargetHover class function
 	    if(Input.GetMouseButtonDown(0)) {
 			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
+			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-			if (Physics.Raycast(ray, out hit, 100f, interactionMask)) {
+			if (hit.collider != null) {
 				hit.collider.GetComponent<TargetHover>().OnClicked();
 				Debug.Log("Click");
 			}

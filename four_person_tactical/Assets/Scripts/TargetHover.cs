@@ -5,6 +5,7 @@ using UnityEngine;
 public class TargetHover : MonoBehaviour {
 
     PlayerController playerConrtoller;
+    public Vector2 coord;
 
     SpriteRenderer renderer;
     [SerializeField] Sprite[] sprites;
@@ -33,7 +34,7 @@ public class TargetHover : MonoBehaviour {
     }
 
     public void OnClicked() {
-        playerConrtoller.TargetSelected(transform.position);
+        playerConrtoller.TargetSelected(coord);
         Debug.Log("Clicked " + this.name);
 
     }

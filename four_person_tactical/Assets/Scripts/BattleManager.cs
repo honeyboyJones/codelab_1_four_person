@@ -68,9 +68,11 @@ public class BattleManager : MonoBehaviour {
                 TransitionStates(BattleState.PlayerTurn);
                 break;
             case BattleState.PlayerTurn:
+
                 playerController.takingTurn = true;
                 playerController.currentBattler = CurrentBattler();
                 StartCoroutine(playerController.TakeTurn());
+
                 break;
             case BattleState.EnemyTurn:
                 break;

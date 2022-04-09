@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public enum Actions { Move, Attack, Defend }
+    public Actions currentAction;
 
     public delegate void OnPlayerAction(BattleManager.BattleState targetState);
     public event OnPlayerAction PlayerTurnOverCallback; //anything can subscribe to this event as long as it has a reference to this instance
@@ -31,17 +32,29 @@ public class PlayerController : MonoBehaviour {
 
             yield return null;
         }
-        Debug.Log("Sending Event");
+        Debug.Log("Sending Event"); 
         PlayerTurnOverCallback?.Invoke(BattleManager.BattleState.EnemyTurn);
     }
 
     public void VisualizeTarget(int actionIndex) {
         currentBattler.VisualizeAction(actionIndex);
-        
+        currentAction = (Actions)actionIndex;
+
     }
 
-    public void TargetSelected(Vector3 worldPos) { 
-        
+    public void TargetSelected(Vector2 coord) { 
+
+
+        switch (currentAction) {
+            case Actions.Move:
+                StartCoroutine(currentBattler.Move(coord));
+                break;
+            case Actions.Attack:
+                break;
+            case Actions.Defend:
+                break;
+
+        }
     }
 
     public IEnumerator MoveBattler(Vector2 coord) {
