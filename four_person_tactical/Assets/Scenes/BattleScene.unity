@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -2270,7 +2270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &573891360
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2546,9 +2546,9 @@ MonoBehaviour:
   currentState: 0
   battlers: []
   playerBattlers:
-  - {fileID: 5481270706685275011, guid: 1e32c45aff829ae4998ce3a4c9542ce9, type: 3}
+  - {fileID: 5481270706685275011, guid: 54731af19bd2f4e32afa85f062670e36, type: 3}
   enemyBattlers:
-  - {fileID: 5481270706685275011, guid: 06c5834b3427f2a4688b55a6172328cc, type: 3}
+  - {fileID: 5481270706685275011, guid: 1e32c45aff829ae4998ce3a4c9542ce9, type: 3}
   spawnPositions:
   - {x: 1, y: 1}
   - {x: 12, y: 6}

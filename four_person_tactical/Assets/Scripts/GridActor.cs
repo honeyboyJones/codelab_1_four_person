@@ -44,38 +44,45 @@ public class GridActor : MonoBehaviour {
     }
 
     public IEnumerator MoveToCoord(Vector2 targetCoord) {
-        bool isMoving = true;
-        while (isMoving) {
+        // bool isMoving = true;
+        // while (isMoving) {
 
-            int xMove = (int)Mathf.Abs(coord.coordinate.x - targetCoord.x);
-            int xDirection = (coord.coordinate.x > targetCoord.x) ? -1 : 1;
-            int yMove = (int)Mathf.Abs(coord.coordinate.y - targetCoord.y);
-            int yDirection = (coord.coordinate.y > targetCoord.y) ? -1 : 1;
+        //     int xMove = (int)Mathf.Abs(coord.coordinate.x - targetCoord.x);
+        //     int xDirection = (coord.coordinate.x > targetCoord.x) ? -1 : 1;
+        //     int yMove = (int)Mathf.Abs(coord.coordinate.y - targetCoord.y);
+        //     int yDirection = (coord.coordinate.y > targetCoord.y) ? -1 : 1;
 
             
-            for (int x = 0; x <= xMove; x++) {
-                Vector2 nextCoord = new Vector2(coord.coordinate.x + xDirection, coord.coordinate.y);
-                Coordinate nextCoordinate = gridManager.coords.Find(x => x.coordinate == nextCoord);
-                while (Vector3.Distance(transform.position, nextCoordinate.worldPosition) < 0.05f) {                                  
-                    transform.position = Vector3.Lerp(transform.position, nextCoordinate.worldPosition, Time.deltaTime * moveSpeed);
-                    yield return new WaitForFixedUpdate();                   
-                }
-                transform.position = nextCoordinate.worldPosition;
-                coord = nextCoordinate;
-            }
-            for (int y = 0; y <= yMove; y++) { 
-                Vector2 nextCoord = new Vector2(coord.coordinate.x, coord.coordinate.y + yDirection);
-                Coordinate nextCoordinate = gridManager.coords.Find(x => x.coordinate == nextCoord);
-                while (Vector3.Distance(transform.position, nextCoordinate.worldPosition) < 0.05f) {                                  
-                    transform.position = Vector3.Lerp(transform.position, nextCoordinate.worldPosition, Time.deltaTime * moveSpeed);
-                    yield return new WaitForFixedUpdate();                   
-                }
-                transform.position = nextCoordinate.worldPosition;
-                coord = nextCoordinate;
-            }
+        //     for (int x = 0; x <= xMove; x++) {
+        //         Vector2 nextCoord = new Vector2(coord.coordinate.x + xDirection, coord.coordinate.y);
+        //         Coordinate nextCoordinate = gridManager.coords.Find(x => x.coordinate == nextCoord);
+        //         while (Vector3.Distance(transform.position, nextCoordinate.worldPosition) < 0.05f) {                                  
+        //             transform.position = Vector3.Lerp(transform.position, nextCoordinate.worldPosition, Time.deltaTime * moveSpeed);
+        //             yield return new WaitForFixedUpdate();                   
+        //         }
+        //         transform.position = nextCoordinate.worldPosition;
+        //         coord = nextCoordinate;
+        //     }
+        //     for (int y = 0; y <= yMove; y++) { 
+        //         Vector2 nextCoord = new Vector2(coord.coordinate.x, coord.coordinate.y + yDirection);
+        //         Coordinate nextCoordinate = gridManager.coords.Find(x => x.coordinate == nextCoord);
+        //         while (Vector3.Distance(transform.position, nextCoordinate.worldPosition) < 0.05f) {                                  
+        //             transform.position = Vector3.Lerp(transform.position, nextCoordinate.worldPosition, Time.deltaTime * moveSpeed);
+        //             yield return new WaitForFixedUpdate();                   
+        //         }
+        //         transform.position = nextCoordinate.worldPosition;
+        //         coord = nextCoordinate;
+        //     }
 
-            yield return new WaitForFixedUpdate();
-        }
+        //     isMoving = false;
+        //     yield return new WaitForFixedUpdate();
+        // }
+
+        Coordinate nextCoordinate = gridManager.coords.Find(x => x.coordinate == targetCoord);
+        transform.position = nextCoordinate.worldPosition;
+        coord = nextCoordinate;
+
+        yield return null;
     }
 
 }

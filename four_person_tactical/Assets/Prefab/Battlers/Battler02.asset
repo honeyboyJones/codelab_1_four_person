@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portrait: {fileID: 0}
   _name: Enemy
-  prefab: {fileID: 5481270706685275008, guid: 06c5834b3427f2a4688b55a6172328cc, type: 3}
+  prefab: {fileID: 5481270706685275008, guid: 1e32c45aff829ae4998ce3a4c9542ce9, type: 3}
   maxHP: 7
   currentHP: 7
   currentShield: 0
