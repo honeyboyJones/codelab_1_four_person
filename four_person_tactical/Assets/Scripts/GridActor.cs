@@ -20,24 +20,36 @@ public class GridActor : MonoBehaviour {
         
     }
 
-    public List<Vector3> CalculateAdjacentCoords(int range) {
-        List<Vector3> adjacentCoords = new List<Vector3>();
+    public List<Vector3[]> CalculateAdjacentCoords(int range) {
+        List<Vector3[]> adjacentCoords = new List<Vector3[]>();
 
         Vector2 coordOffset = coord.coordinate - new Vector2(range, range);
        
         for (int r = 1; r <= range; r++) {
             Vector2 offset = new Vector2(coord.coordinate.x - r, coord.coordinate.y);
             Coordinate findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
-            if (findAdjacent != null) adjacentCoords.Add(findAdjacent.worldPosition);
+            if (findAdjacent != null){
+                Vector3[] coordInfo = new [] {findAdjacent.worldPosition, new Vector3(findAdjacent.coordinate.x,findAdjacent.coordinate.y,0)};
+                adjacentCoords.Add(coordInfo);
+            }
             offset = new Vector2(coord.coordinate.x + r, coord.coordinate.y);
             findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
-            if (findAdjacent != null) adjacentCoords.Add(findAdjacent.worldPosition);
+            if (findAdjacent != null){
+                Vector3[] coordInfo = new [] {findAdjacent.worldPosition, new Vector3(findAdjacent.coordinate.x,findAdjacent.coordinate.y,0)};
+                adjacentCoords.Add(coordInfo);
+            }
             offset = new Vector2(coord.coordinate.x, coord.coordinate.y - r);
             findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
-            if (findAdjacent != null) adjacentCoords.Add(findAdjacent.worldPosition);
+            if (findAdjacent != null){
+                Vector3[] coordInfo = new [] {findAdjacent.worldPosition, new Vector3(findAdjacent.coordinate.x,findAdjacent.coordinate.y,0)};
+                adjacentCoords.Add(coordInfo);
+            }
             offset = new Vector2(coord.coordinate.x, coord.coordinate.y + r);
             findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
-            if (findAdjacent != null) adjacentCoords.Add(findAdjacent.worldPosition);
+            if (findAdjacent != null){
+                Vector3[] coordInfo = new [] {findAdjacent.worldPosition, new Vector3(findAdjacent.coordinate.x,findAdjacent.coordinate.y,0)};
+                adjacentCoords.Add(coordInfo);
+            }
         }
 
         return adjacentCoords;

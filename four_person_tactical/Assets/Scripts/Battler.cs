@@ -24,10 +24,10 @@ public class Battler : MonoBehaviour {
         EndVisualization();
         switch (actionIndex) {
             case 0:
-                List<Vector3> targetPos = thisActor.CalculateAdjacentCoords(stats.speed);
-                foreach(Vector3 pos in targetPos) {
-                    GameObject newTarget = Instantiate(targets[0], pos, Quaternion.identity);
-                    newTarget.GetComponent<TargetHover>().coord = new Vector2(pos.x, pos.y);
+                List<Vector3[]> targetPos = thisActor.CalculateAdjacentCoords(stats.speed);
+                foreach(Vector3[] pos in targetPos) {
+                    GameObject newTarget = Instantiate(targets[0], pos[0], Quaternion.identity);
+                    newTarget.GetComponent<TargetHover>().coord = new Vector2(pos[1].x, pos[1].y);
                     instancedTargets.Add(newTarget);
                 }            
                 break;
