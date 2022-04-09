@@ -96,7 +96,14 @@ public class Battler : MonoBehaviour {
                 stats.currentShield -= damageTaken;
 
         } else 
-            stats.currentHP -= damageTaken;       
+        {
+            if(damageTaken > stats.currentHP){
+                stats.currentHP = 0;
+                StartCoroutine(BattlerDeath());
+            } else
+            stats.currentHP -= damageTaken;
+
+        }
     }
 
     IEnumerator DebugStaticText(){
@@ -107,4 +114,9 @@ public class Battler : MonoBehaviour {
         }
     }
 
+    IEnumerator BattlerDeath()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+    }
 }

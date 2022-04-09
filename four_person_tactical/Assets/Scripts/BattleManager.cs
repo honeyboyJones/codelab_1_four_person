@@ -108,9 +108,10 @@ public class BattleManager : MonoBehaviour {
             newBattler.BattlerAttackCallback +=  BattlerCombat;
             battlers[i] = newBattler;
             
-
-            targetCoord.occupiedBy = newBattler.thisActor;
-
+            if(!newBattler.controlledByPlayer)
+            {
+                targetCoord.occupiedBy = newBattler.thisActor;
+            }
 
             index ++;
         }
