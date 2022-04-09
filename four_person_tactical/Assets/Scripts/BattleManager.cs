@@ -5,26 +5,29 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour {
 
     PlayerController playerController;
+    [SerializeField] GridManager gridManager;
 
-    List<Battler> playerBattlers = new List<Battler>();
-    List<Battler> enemyBattlers = new List<Battler>();
-    List<Battler> turnOrderBattlers = new List<Battler>();
-
-    public delegate void OnBattleState(float dummy);
-    public event OnBattleState BattleStartCallback;
-
-    public enum BattleState
-    {
+    public enum BattleState {
         BattleStart,
         PlayerTurn,
         EnemyTurn,
         RoundOver,
         BattleOver
     }
-    [SerializeField]
-    private BattleState currentState;
+    [SerializeField] private BattleState currentState;
 
-    #region Singleton
+    public List<Battler> battlers = new List<Battler>();
+    public List<Battler> playerBattlers = new List<Battler>();
+    public List<Battler> enemyBattlers = new List<Battler>();
+    List<Battler> turnOrderBattlers = new List<Battler>();
+    [SerializeField] Vector2[] spawnPositions;
+
+    public delegate void OnBattleState(float dummy);
+    public event OnBattleState BattleStartCallback;
+
+
+    //not currently used
+    /*#region Singleton
 
     public static BattleManager instance;
     private void Awake() {
@@ -34,15 +37,18 @@ public class BattleManager : MonoBehaviour {
         }
         instance = this;
     }
-    #endregion
+    #endregion */
 
     private void Start() {
-        if(PlayerController.instance != null)
-        {
+        if (PlayerController.instance != null) {
             playerController = PlayerController.instance;
-
             playerController.PlayerTurnOverCallback += TransitionStates;
         }
+        if (GridManager.instance != null) {
+            gridManager = GridManager.instance;
+        }
+
+        battlers = GetAllBattlers();
 
         currentState = BattleState.BattleStart;
         StartCoroutine(RunCurrentState());
@@ -50,25 +56,21 @@ public class BattleManager : MonoBehaviour {
     }
     void TransitionStates(BattleState targetState) {
         currentState = targetState;
-        Debug.Log("Event Triggered");
-
         StartCoroutine(RunCurrentState()); 
     }
 
-    IEnumerator RunCurrentState()
-    {
-        switch(currentState)
-        {
+    IEnumerator RunCurrentState() {
+        switch(currentState) {
             case BattleState.BattleStart:
-            Debug.Log("Current Event");
-                //EstablishTurnOrder();
-                //TransitionStates(BattleState.PlayerTurn);
+                InstanceBattlers();
 
-                BattleStartCallback?.Invoke(0);
-                Debug.Log((BattleStartCallback != null));
+                EstablishTurnOrder();
+                TransitionStates(BattleState.PlayerTurn);
                 break;
             case BattleState.PlayerTurn:
                 playerController.takingTurn = true;
+                playerController.currentBattler = CurrentBattler();
+                StartCoroutine(playerController.TakeTurn());
                 break;
             case BattleState.EnemyTurn:
                 break;
@@ -82,7 +84,33 @@ public class BattleManager : MonoBehaviour {
         yield return null;
     }
     
-    void EstablishTurnOrder() {
+    void EstablishTurnOrder() {     
+
+        turnOrderBattlers.Add(battlers[0]);
+        turnOrderBattlers.Add(battlers[1]);
+    }
+
+    private void InstanceBattlers() {
+        int index = 0;
+
+        for (int i = 0; i <= battlers.Count - 1; i++) {
+
+            Coordinate targetCoord = gridManager.coords.Find(x => x.coordinate == spawnPositions[index]);
+            Battler newBattler = Instantiate
+                (battlers[i].stats.prefab,
+                targetCoord.worldPosition,
+                Quaternion.identity).GetComponent<Battler>();
+
+            newBattler.thisActor = newBattler.GetComponent<GridActor>();
+            newBattler.thisActor.coord = targetCoord;
+            battlers[i] = newBattler;
+
+
+            index ++;
+        }
+    }
+
+    List<Battler> GetAllBattlers() { 
         List<Battler> allBattlers = new List<Battler>();
         foreach (Battler battler in playerBattlers) {
             allBattlers.Add(battler);
@@ -90,9 +118,7 @@ public class BattleManager : MonoBehaviour {
         foreach (Battler battler in enemyBattlers) {
             allBattlers.Add(battler);
         }
-
-        turnOrderBattlers.Add(playerBattlers[0]);
-        turnOrderBattlers.Add(enemyBattlers[0]);
+        return allBattlers;
     }
 
     Battler CurrentBattler() {

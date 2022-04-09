@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5481270706685275011}
   - component: {fileID: 5481270706685275020}
   m_Layer: 0
-  m_Name: Enemy 1
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.9811321, g: 0.26379493, b: 0.26379493, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -96,19 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac9a13abe4647e488f723d61d556571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats:
-    portrait: {fileID: 0}
-    name: 
-    prefab: {fileID: 5481270706685275008}
-    maxHP: 10
-    currentHP: 10
-    currentShield: 0
-    speed: 0
-    inititive: 0
-    strength: 2
-    defence: 3
-    turnIndex: 0
-  controlledByPlayer: 0
+  stats: {fileID: 11400000, guid: a1a029b90ebb87c4bae39a732bd46cbf, type: 2}
+  controlledByPlayer: 1
+  targeting: 0
+  targets:
+  - {fileID: 4477526354362369773, guid: 4c859fee3db66c64ebbc8cd6cfbe49a3, type: 3}
 --- !u!114 &5481270706685275020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,4 +113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c7fabbbea37df408e0a8d9b6bf651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate: {x: 0, y: 0}
+  coord:
+    coordinate: {x: 0, y: 0}
+    worldPosition: {x: 0, y: 0, z: 0}
+    occupiedBy: {fileID: 0}
+  moveSpeed: 3
+  actionDelay: 0.25

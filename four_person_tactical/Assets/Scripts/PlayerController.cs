@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    public enum Actions { Move, Attack, Defend }
+
     public delegate void OnPlayerAction(BattleManager.BattleState targetState);
     public event OnPlayerAction PlayerTurnOverCallback; //anything can subscribe to this event as long as it has a reference to this instance
 
+    public bool takingTurn;
+
+    List<Battler> playerBattlers = new List<Battler>();
+    public Battler currentBattler;
 
     #region Singleton
 
@@ -20,28 +26,30 @@ public class PlayerController : MonoBehaviour {
     }
     #endregion
 
-    IEnumerator Start()
-    {
-        yield return new WaitForSeconds(1);
-
-        takingTurn = false;
-        StartCoroutine(TakeTurn());
-    }
-
-    public bool takingTurn;
-
-    List<Battler> playerBattlers = new List<Battler>();
-    public Battler currentBattler;
-
-
-    IEnumerator TakeTurn() {
-        while(takingTurn) {
+    public IEnumerator TakeTurn() {
+        while(takingTurn) { //execute this loop while player is taking their turn
 
             yield return null;
-
         }
-
         Debug.Log("Sending Event");
         PlayerTurnOverCallback?.Invoke(BattleManager.BattleState.EnemyTurn);
+    }
+
+    public void VisualizeTarget(int actionIndex) {
+        currentBattler.VisualizeAction(actionIndex);
+        
+    }
+
+    public void TargetSelected(Vector3 worldPos) { 
+        
+    }
+
+    public IEnumerator MoveBattler(Vector2 coord) {
+        yield return StartCoroutine(currentBattler.Move(coord));
+        takingTurn = false;
+    }
+
+    public void AddDefense() {
+        currentBattler.AddDefence();
     }
 }

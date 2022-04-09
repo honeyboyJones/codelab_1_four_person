@@ -7,13 +7,9 @@ public class GridManager : MonoBehaviour {
     [SerializeField] Vector2 gridDimensions;
     [SerializeField] float tileSize;
     public List<Coordinate> coords = new List<Coordinate>();
-    public List<Battler> battlers = new List<Battler>();
 
-    [SerializeField]
-    Vector2[] spawnPositions;
-
-    [SerializeField]
-    BattleManager battleManager;
+    //[SerializeField]
+    //BattleManager battleManager;
 
 
     #region Singleton
@@ -29,70 +25,47 @@ public class GridManager : MonoBehaviour {
     #endregion
 
     public void Start() {
+        
+        float tileSizeOffset = tileSize / 2; //Used for offsetting tile's worldPos
 
         //Declare list of Coordinates
-        for( int x = 0; x<gridDimensions.x; x++)
-        {
-            for (int y = 0; y < gridDimensions.y; y++)
-            {
+        for ( int x = 0; x < gridDimensions.x; x++) {
+            for (int y = 0; y < gridDimensions.y; y++) {
+
                 Coordinate newCoordinate = new Coordinate();
-                newCoordinate.coord = new Vector2(x, y);
-                float tileSizeOffset = tileSize / 2;
+                newCoordinate.InitializeCoordinate (
+                    new Vector2(x, y),
+                    new Vector3 (x - gridDimensions.x / 2 + tileSizeOffset, y - gridDimensions.y / 2 + tileSizeOffset, 0
+                    ));
                 
-                newCoordinate.worldPos = new Vector3(x - gridDimensions.x / 2 + tileSizeOffset, 0, y - gridDimensions.y / 2);
                 coords.Add(newCoordinate);
             }
-        }
+        }  
 
-        
-        
-
-        if(BattleManager.instance != null)
-        {
-            battleManager = BattleManager.instance;
-            battleManager.BattleStartCallback += SpawnBattler;
-        }
+        //if(BattleManager.instance != null) {
+        //    battleManager = BattleManager.instance;
+        //}
     }
-
-    private void SpawnBattler(float dummy)
-    {
-        int index = 0;
-
-        foreach (Battler battler in battlers)
-        {
-            Coordinate targetCoord = new Coordinate();
-            targetCoord.coord = spawnPositions[index];
-            Coordinate targetWorldPos = coords.Find(x => x.coord == targetCoord.coord);
-            Instantiate(battler.stats.prefab, new Vector3 (targetWorldPos.worldPos.x, 0, targetWorldPos.worldPos.z), Quaternion.identity);
-            index ++;
-        }
-    }
-
-    Coordinate UpdateCoordinate(Coordinate targetCoord, GridActor actor = null) {
-        Coordinate newCoordinate = new Coordinate();
-        newCoordinate.coord = targetCoord.coord;
-
-        if (actor == null)
-        {
-            newCoordinate.occupiedBy = null;
-        }
-        else
-        {
-            newCoordinate.occupiedBy = actor;
-        }
-
-        return newCoordinate;
-    }
-
 }
+
+
 [System.Serializable]
 public class Coordinate {
 
-    public Vector2 coord;
-    public Vector3 worldPos;
+    public Vector2 coordinate;
+    public Vector3 worldPosition;
     public GridActor occupiedBy;
 
 
+    public void InitializeCoordinate(Vector2 coord, Vector3 worldPos, GridActor occupied = null) {
+        coordinate = coord;
+        worldPosition = worldPos;
+        occupiedBy = occupied; 
+    }
 
+    public void UpdateCoordinateOccupancy(GridActor occupied = null) {
+    
+    
+    }
 }
 

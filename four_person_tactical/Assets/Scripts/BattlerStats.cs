@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class BattlerStats {
+[CreateAssetMenu(fileName = "New Battler Stats", menuName = "Battler Stats")]
+public class BattlerStats : ScriptableObject {
 
     [Header("Cosmetics")]
     public Sprite portrait;
-    public string name;
+    public string _name;
     public GameObject prefab;
 
     [Header("Core Stats")]
@@ -15,7 +16,7 @@ public class BattlerStats {
     public int currentHP;
     public int currentShield;
     public int speed;
-    public int inititive;
+    public int initiative;
     public int strength;
     public int defence;
 
