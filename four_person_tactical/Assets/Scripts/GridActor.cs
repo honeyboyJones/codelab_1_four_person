@@ -38,23 +38,26 @@ public class GridActor : MonoBehaviour {
 
         List<Coordinate> adjacentCoords = new List<Coordinate>();
         List<Vector2> adjacentVectors = new List<Vector2>();
-        
-        //Calculate adjacent vectors and store them. Equation applied in four directions
+
         for (int r = 1; r <= range; r++) { //loop through each value included in the range
             //up direction        
-            for (int i = 0; i < r; i++) { //loop through the current range value (r), add to origin on one axis, remove from range on the other
+            adjacentVectors.Add(new Vector2(coord.coordinate.x, coord.coordinate.y + r)); // straight in direction
+            for (int i = 1; i < r; i++) { //loop through the current range value, add to origin on one axis, remove from range on the other
                 adjacentVectors.Add(new Vector3 (coord.coordinate.x + i, coord.coordinate.y + r - i)); //staircase equation
             }
-            //right direction           
-            for (int i = 0; i < r; i++) {
+            //right direction
+            adjacentVectors.Add(new Vector2(coord.coordinate.x + r, coord.coordinate.y)); // straight in direction
+            for (int i = 1; i < r; i++) {
                 adjacentVectors.Add(new Vector3(coord.coordinate.x + i, coord.coordinate.y - r + i)); //staircase equation
             }
-            //down direction           
-            for (int i = 0; i < r; i++) {
+            //down direction
+            adjacentVectors.Add(new Vector2(coord.coordinate.x, coord.coordinate.y - r)); // straight in direction
+            for (int i = 1; i < r; i++) {
                 adjacentVectors.Add(new Vector3(coord.coordinate.x - i, coord.coordinate.y - r + i)); //staircase equation
             }
-            //left direction           
-            for (int i = 0; i < r; i++) {
+            //left direction
+            adjacentVectors.Add(new Vector2(coord.coordinate.x - r, coord.coordinate.y)); // straight in direction
+            for (int i = 1; i < r; i++) {
                 adjacentVectors.Add(new Vector3(coord.coordinate.x - i, coord.coordinate.y + r - i)); //staircase equation
             }
         }
