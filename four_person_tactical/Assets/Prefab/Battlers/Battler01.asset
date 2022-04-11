@@ -18,7 +18,7 @@ MonoBehaviour:
   maxHP: 10
   currentHP: 10
   currentShield: 0
-  speed: 3
+  speed: 2
   initiative: 2
   strength: 3
   attackRange: 2

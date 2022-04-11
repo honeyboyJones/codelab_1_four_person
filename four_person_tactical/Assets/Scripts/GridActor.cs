@@ -35,33 +35,64 @@ public class GridActor : MonoBehaviour {
     // returns list of coordinates adjacent to local coordinate by a factor of range
     // used by the battler class
     public List<Coordinate> CalculateAdjacentCoords(int range) {
-        List<Coordinate> adjacentCoords = new List<Coordinate>();
 
-        Vector2 coordOffset = coord.coordinate - new Vector2(range, range);
-       
-       // four-directional grid targeting for visualization and movement
+        List<Coordinate> adjacentCoords = new List<Coordinate>();
+        List<Vector2> adjacentVectors = new List<Vector2>();
+        
+        //Calculate adjacent vectors and store them. Equation applied in four directions
         for (int r = 1; r <= range; r++) {
-            // for left
-            Vector2 offset = new Vector2(coord.coordinate.x - r, coord.coordinate.y); 
-            Coordinate findAdjacent = gridManager.coords.Find(x => x.coordinate == offset); // the find constructor looks through a list and compares its contents to a control variable
-            if (findAdjacent != null) adjacentCoords.Add(findAdjacent);
-            
-            // for right
-            offset = new Vector2(coord.coordinate.x + r, coord.coordinate.y);
-            findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
-            if (findAdjacent != null) adjacentCoords.Add(findAdjacent);
-            
-            // for down
-            offset = new Vector2(coord.coordinate.x, coord.coordinate.y - r);
-            findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
-            if (findAdjacent != null) adjacentCoords.Add(findAdjacent);
-            
-            // for up
-            offset = new Vector2(coord.coordinate.x, coord.coordinate.y + r);
-            findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
-            if (findAdjacent != null)  adjacentCoords.Add(findAdjacent);
-            
+            //up direction
+            adjacentVectors.Add(new Vector2(coord.coordinate.x, coord.coordinate.y + r)); // straight in direction
+            for (int i = 1; i < r; i++) {
+                adjacentVectors.Add(new Vector3 (coord.coordinate.x + i, coord.coordinate.y + r - i)); //staircase equation
+            }
+            //right direction
+            adjacentVectors.Add(new Vector2(coord.coordinate.x + r, coord.coordinate.y)); // straight in direction
+            for (int i = 1; i < r; i++) {
+                adjacentVectors.Add(new Vector3(coord.coordinate.x + i, coord.coordinate.y - r + i)); //staircase equation
+            }
+            //down direction
+            adjacentVectors.Add(new Vector2(coord.coordinate.x, coord.coordinate.y - r)); // straight in direction
+            for (int i = 1; i < r; i++) {
+                adjacentVectors.Add(new Vector3(coord.coordinate.x - i, coord.coordinate.y - r + i)); //staircase equation
+            }
+            //left direction
+            adjacentVectors.Add(new Vector2(coord.coordinate.x - r, coord.coordinate.y)); // straight in direction
+            for (int i = 1; i < r; i++) {
+                adjacentVectors.Add(new Vector3(coord.coordinate.x - i, coord.coordinate.y + r - i)); //staircase equation
+            }
         }
+
+        //Compared stored vectors to Coordinates on the GridManager
+        foreach (Vector2 vector in adjacentVectors) {
+            Coordinate findAdjacent = gridManager.coords.Find(x => x.coordinate == vector); // the find constructor looks through a list and compares its contents to a control variable
+            if (findAdjacent != null) 
+                adjacentCoords.Add(findAdjacent);
+        }
+
+        // four-directional grid targeting for visualization and movement -- no staircase equation! refactored above
+        //for (int r = 1; r <= range; r++) {
+        //    // for left
+        //    Vector2 offset = new Vector2(coord.coordinate.x - r, coord.coordinate.y); 
+        //    Coordinate findAdjacent = gridManager.coords.Find(x => x.coordinate == offset); // the find constructor looks through a list and compares its contents to a control variable
+        //    if (findAdjacent != null) adjacentCoords.Add(findAdjacent);
+
+        //    // for right
+        //    offset = new Vector2(coord.coordinate.x + r, coord.coordinate.y);
+        //    findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
+        //    if (findAdjacent != null) adjacentCoords.Add(findAdjacent);
+
+        //    // for down
+        //    offset = new Vector2(coord.coordinate.x, coord.coordinate.y - r);
+        //    findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
+        //    if (findAdjacent != null) adjacentCoords.Add(findAdjacent);
+
+        //    // for up
+        //    offset = new Vector2(coord.coordinate.x, coord.coordinate.y + r);
+        //    findAdjacent = gridManager.coords.Find(x => x.coordinate == offset);
+        //    if (findAdjacent != null)  adjacentCoords.Add(findAdjacent);
+
+        //}
 
         return adjacentCoords; // returns the full list after all the coordinates have been added
     }
